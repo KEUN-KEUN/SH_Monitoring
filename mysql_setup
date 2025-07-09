@@ -1,0 +1,18 @@
+show databases;
+
+create database shMonitoring;
+
+drop  database shMonitoring;
+
+commit;
+
+
+
+-- 1. 사용자 계정 생성 및 비밀번호 설정
+CREATE USER 'hk90'@'%' IDENTIFIED BY 'hk1234';
+
+-- 2. 특정 데이터베이스에 대한 모든 권한 부여
+GRANT ALL PRIVILEGES ON my_database.* TO 'hk90'@'%';
+
+-- 3. 권한 적용
+FLUSH PRIVILEGES;
