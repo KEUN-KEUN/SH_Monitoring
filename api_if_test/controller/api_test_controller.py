@@ -28,6 +28,6 @@ async def apiTestRead(
         await ApiTestServiceImpl.api_test(apiService, "api_test")
 
     except Exception as e:
-        print(f"❌ Error in generateMarketingData(): {str(e)}")
+        print(f"❌ Error in API서비스 데이터 : {str(e)}")
         raise HTTPException(status_code=500, detail="서버 내부 오류 발생")
     
