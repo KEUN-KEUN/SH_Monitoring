@@ -11,6 +11,7 @@ from config.initializer import lifespan   # app의 생명 주기 관리
 
 from api_if_test.controller.api_test_controller import testingRouter  # API 테스트 컨트롤러
 
+
 # 초기 설정
 warnings.filterwarnings("ignore", category=aiomysql.Warning)
 load_dotenv()

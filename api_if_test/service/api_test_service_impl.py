@@ -18,6 +18,10 @@ import pandas as pd
 from pymongo import MongoClient
 
 
+import motor.motor_asyncio
+from motor.motor_asyncio import AsyncIOMotorClient
+
+
 # ✅ 로깅 설정
 logger = logging.getLogger(__name__)
 logging.basicConfig(
@@ -30,6 +34,7 @@ class ApiTestServiceImpl(ApiTestService):
     # 생성자
     def __init__(self, httpRequest: Request, db_pool: Pool):
         self.httpRequest = httpRequest
+        self.vector_db = self.httpRequest.app.state.vectorDBPool
         
 
     async def readCSV(self, file_path: str) -> list:
@@ -87,23 +92,14 @@ class ApiTestServiceImpl(ApiTestService):
             # 기록된 결과를 출력
             
             logging.info("***************************************************")
-            # MongoDB 연결 설정
-            # client = MongoClient("mongodb://localhost:27017/")
-            client = MongoClient("mongodb://hk90:hkl1234@localhost:27017/shMonitoring")
-            db = client["shMonitoring"]
-            collection = db["humanResource"]
 
+            # VectorDB 호출
+            vector_db = self.vector_db
+            # Insert data into the humanResource collection
+            collection = vector_db.humanResource
+            for area in result:
+                await collection.insert_one(area)
 
-            # 결과를 MongoDB에 저장
-            if isinstance(result, list):
-                print("11111111111111111111")
-                collection.insert_many(result)
-            else:
-                print("22222222222222222222")
-                collection.insert_one(result)
-            # logging.info(f"[api-test] Total areas processed: {result}")
-            logging.info("***************************************************")
-                        
             end_time = datetime.now()
             totalTime = end_time - start_time
             
@@ -125,6 +121,3 @@ class ApiTestServiceImpl(ApiTestService):
         except Exception as e:
             print(f"❌ ApiTestServiceImpl Error in api_test(): {str(e)}")
             raise HTTPException(status_code=500, detail=str(e))
-        
-
-
