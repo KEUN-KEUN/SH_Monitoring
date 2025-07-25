@@ -23,7 +23,7 @@ async def apiTestRead(
     apiService: ApiTestServiceImpl = Depends(injectApiTest),
 ):
     try:
-        print("api_test 호출")
+        # print("api_test 호출")
 
         await ApiTestServiceImpl.api_test(apiService, "api_test")
 

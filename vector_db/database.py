@@ -23,9 +23,9 @@ async def getMongoPool() -> AsyncIOMotorClient:
 
     uri = f"mongodb://{user}:{password}@{host}:{port}/{db}"
 
-    print("************************************")
-    print(f"Connecting to MongoDB at {uri}")
-    print("************************************")
+    # print("************************************")
+    # print(f"Connecting to MongoDB at {uri}")
+    # print("************************************")
                         
     client = motor.motor_asyncio.AsyncIOMotorClient(uri)
     mongoDB = client[db]

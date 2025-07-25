@@ -10,6 +10,7 @@ from aiomysql import Pool
 from typing import List, Dict
 
 from api_if_test.service.api_test_service import ApiTestService
+from api_if_test.repository.apiTest_repository_impl import APITestRepositoryImpl
 
 import aiohttp
 import asyncio
@@ -88,17 +89,21 @@ class ApiTestServiceImpl(ApiTestService):
             # logging.info("** area_nm ****************************************")
             # logging.info(f"[api-test] First area name: {area_nm}")
             # logging.info("***************************************************")
-
             # 기록된 결과를 출력
             
-            logging.info("***************************************************")
+            
 
-            # VectorDB 호출
-            vector_db = self.vector_db
-            # Insert data into the humanResource collection
-            collection = vector_db.humanResource
-            for area in result:
-                await collection.insert_one(area)
+            # logging.info("***************************************************")
+
+            # # # VectorDB 호출
+            # vector_db = self.vector_db
+            # # Insert data into the humanResource collection
+            # collection = vector_db.humanResource
+            # for area in result:
+            #     await collection.insert_one(area)
+
+            await APITestRepositoryImpl.test_create(self, result)
+
 
             end_time = datetime.now()
             totalTime = end_time - start_time

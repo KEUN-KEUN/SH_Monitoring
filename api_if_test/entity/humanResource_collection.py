@@ -35,6 +35,15 @@ class CityDataPpltn(BaseModel):
     FCST_YN: str
     FCST_PPLTN: Dict[str, List[ForecastPpltn]]
 
+    # 검증 로직을 테스트 형식으로 추가해봄
+    @field_validator('AREA_NM', mode='before')
+    @classmethod
+    def parse_area_nm(cls, v):
+        if v is None:
+            raise ValueError("AREA_NM cannot be None")
+        if not isinstance(v, str):
+            raise TypeError("AREA_NM must be a string")
+        return v.strip()
 
 class ResultStatus(BaseModel):
     RESULT_CODE: str = Field(..., alias="RESULT.CODE")
@@ -46,14 +55,6 @@ class CityDataMap(BaseModel):
     RESULT: ResultStatus
 
 
-class UserResponse(BaseModel):
+class APITestResponse(BaseModel):
     Map: CityDataMap
-   
-    @field_validator('AREA_NM', mode='before')
-    @classmethod
-    def parse_area_nm(cls, v):
-        if v is None:
-            raise ValueError("AREA_NM cannot be None")
-        if not isinstance(v, str):
-            raise TypeError("AREA_NM must be a string")
-        return v.strip()
+
