@@ -12,6 +12,12 @@ from config.initializer import lifespan   # app의 생명 주기 관리
 from api_if_test.controller.api_test_controller import testingRouter  # API 테스트 컨트롤러
 
 
+# test --------------------------------------------
+from datetime import datetime, timedelta
+
+# -------------------------------------------------
+
+
 # 초기 설정
 warnings.filterwarnings("ignore", category=aiomysql.Warning)
 load_dotenv()
@@ -37,6 +43,11 @@ if __name__ == "__main__":
 
     print("********************** app 실행 **********************")    
     print(f"Starting FastAPI app on {host}:{port}")
+
+    now = datetime.now()
+    next_hour = (now + timedelta(hours=1)).replace(minute=0, second=10, microsecond=0)
+
+    print(f"Time : {now} : {next_hour}")
 
     uvicorn.run(app, host=host, port=port)
 
