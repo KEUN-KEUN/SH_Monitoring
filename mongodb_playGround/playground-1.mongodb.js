@@ -46,22 +46,32 @@
 //   { $group: { _id: '$item', totalSaleAmount: { $sum: { $multiply: [ '$price', '$quantity' ] } } } }
 // ]);
 
+/*
+단축키 
+  Ctrl + Alt + S : 구역 실행
 
+*/
 
 use('shMonitoring');
+db.humanResource.deleteMany({})
 
 // db.getName()
-
-//db.humanResource.find({})
+use('shMonitoring');
+db.humanResource.find({})
 
 // javaScript
-// db.humanResource.find({
-//    $where: function () {
-//      const area = this.Map["SeoulRtd.citydata_ppltn"];
-//      return area?.AREA_NM === "구로역" &&
-//             area?.PPLTN_TIME?.startsWith("2025-07-30");
-//    }
-// });
+use('shMonitoring');
+db.humanResource.find({
+   $where: function () {
+     const area = this.Map["SeoulRtd.citydata_ppltn"];
+     return area?.AREA_NM === "구로역" &&
+            area?.PPLTN_TIME?.startsWith("2025-07-29");
+   }
+});
+
+// 전체 count
+use('shMonitoring');
+db.humanResource.find({}).count()
 
 
 // MongoDB Aggregation Framework
